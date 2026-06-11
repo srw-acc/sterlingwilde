@@ -1,0 +1,56 @@
+{
+  "session_id": "20260512-143027-a8b3f1",
+  "created_at": "2026-05-12T14:30:27.000000+00:00",
+  "source_video": "raw/walkthrough.mp4",
+  "schema_version": 1,
+  "stages": {
+    "ingest": {
+      "status": "completed",
+      "started_at": "2026-05-12T14:30:27.500000+00:00",
+      "completed_at": "2026-05-12T14:30:30.100000+00:00",
+      "schema_version": 1,
+      "error": null,
+      "notes": "duration=187.4s, 1920x1080@30.0fps"
+    },
+    "transcribe": {
+      "status": "completed",
+      "started_at": "2026-05-12T14:30:30.200000+00:00",
+      "completed_at": "2026-05-12T14:30:48.000000+00:00",
+      "schema_version": 1,
+      "error": null,
+      "notes": "42 segments, lang=en"
+    },
+    "frames": {
+      "status": "completed",
+      "started_at": "2026-05-12T14:30:48.100000+00:00",
+      "completed_at": "2026-05-12T14:31:12.300000+00:00",
+      "schema_version": 1,
+      "error": null,
+      "notes": "31 keyframes"
+    },
+    "align": {
+      "status": "completed",
+      "started_at": "2026-05-12T14:31:12.400000+00:00",
+      "completed_at": "2026-05-12T14:31:12.600000+00:00",
+      "schema_version": 1,
+      "error": null,
+      "notes": "11 moments from 42 segments"
+    },
+    "analyze": {
+      "status": "completed",
+      "started_at": "2026-05-12T14:31:12.700000+00:00",
+      "completed_at": "2026-05-12T14:32:48.200000+00:00",
+      "schema_version": 1,
+      "error": null,
+      "notes": "11 observations"
+    },
+    "synthesize": {
+      "status": "completed",
+      "started_at": "2026-05-12T14:32:48.300000+00:00",
+      "completed_at": "2026-05-12T14:33:21.800000+00:00",
+      "schema_version": 1,
+      "error": null,
+      "notes": "3 clusters, 2 draft issues"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "clusters": [
+    {
+      "id": "cluster-0001",
+      "theme": "Save action has no in-flight feedback",
+      "summary": "When the user clicks Save in the Create Segment modal, there is no spinner, disabled state, or progress indicator for the ~3 seconds the request is in flight. The narrator was unsure whether anything was happening.",
+      "kind": "ux_friction",
+      "observation_ids": ["o0002", "o0003"],
+      "severity": "high",
+      "confidence": 0.9
+    },
+    {
+      "id": "cluster-0002",
+      "theme": "Empty dashboard offers no guidance",
+      "summary": "A first-time user lands on a dashboard that is empty by default with no explanatory copy or call-to-action. The narrator did not know what to do.",
+      "kind": "ux_friction",
+      "observation_ids": ["o0000"],
+      "severity": "medium",
+      "confidence": 0.85
+    },
+    {
+      "id": "cluster-0003",
+      "theme": "'Segment scope' field is undocumented",
+      "summary": "The 'segment scope' dropdown in the Create Segment modal has two options and no inline explanation. The narrator could not determine what each option meant.",
+      "kind": "ux_friction",
+      "observation_ids": ["o0001"],
+      "severity": "medium",
+      "confidence": 0.9
+    }
+  ]
+}

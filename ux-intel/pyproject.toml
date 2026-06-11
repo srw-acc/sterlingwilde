@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ux-intel"
+version = "0.1.0"
+description = "Turn narrated app walkthroughs into structured implementation intelligence."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "anthropic>=0.92.0",
+    "openai>=1.40.0",
+    "pydantic>=2.7",
+    "click>=8.1",
+    "imagehash>=4.3",
+    "Pillow>=10.0",
+]
+
+[project.optional-dependencies]
+# On-device transcription with no API key. Use `pip install -e ".[local]"`.
+# faster-whisper pulls in ctranslate2 (a few hundred MB of native binaries).
+local = ["faster-whisper>=1.0"]
+
+[project.scripts]
+ux-intel = "ux_intel.cli:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]

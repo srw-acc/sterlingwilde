@@ -1,0 +1,40 @@
+{
+  "moments": [
+    {
+      "id": "m0000",
+      "start": 0.0,
+      "end": 12.4,
+      "transcript": "Okay so I'm just opening the dashboard for the first time. It's pretty bare right now — I'm seeing this big empty space and I'm not really sure what I'm supposed to do here.",
+      "segment_ids": [0, 1, 2],
+      "primary_frame": "intermediates/frames/frame-0000.jpg",
+      "nearby_frames": ["intermediates/frames/frame-0001.jpg"]
+    },
+    {
+      "id": "m0001",
+      "start": 12.8,
+      "end": 28.1,
+      "transcript": "Let me try clicking this Create button up in the corner. Okay, modal opened. The fields here are... wait, what does 'segment scope' mean? There's no help text and the dropdown only has two options.",
+      "segment_ids": [3, 4, 5, 6],
+      "primary_frame": "intermediates/frames/frame-0002.jpg",
+      "nearby_frames": ["intermediates/frames/frame-0003.jpg"]
+    },
+    {
+      "id": "m0002",
+      "start": 29.5,
+      "end": 41.2,
+      "transcript": "I'll just pick 'global' and see what happens. Now I'm filling in the name and... hmm, I hit save and nothing happened. No loading spinner, no confirmation. Did it work?",
+      "segment_ids": [7, 8, 9, 10],
+      "primary_frame": "intermediates/frames/frame-0004.jpg",
+      "nearby_frames": []
+    },
+    {
+      "id": "m0003",
+      "start": 41.5,
+      "end": 49.8,
+      "transcript": "Oh okay, the modal closed eventually. So I guess it did save. But I had no idea anything was happening for like 3 seconds. That's not great.",
+      "segment_ids": [11, 12, 13],
+      "primary_frame": "intermediates/frames/frame-0005.jpg",
+      "nearby_frames": []
+    }
+  ]
+}

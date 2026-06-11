@@ -1,0 +1,68 @@
+{
+  "observations": [
+    {
+      "id": "o0000",
+      "moment_id": "m0000",
+      "quote": "Okay so I'm just opening the dashboard for the first time. It's pretty bare right now — I'm seeing this big empty space and I'm not really sure what I'm supposed to do here.",
+      "t_start": 0.0,
+      "t_end": 12.4,
+      "frame_ref": "intermediates/frames/frame-0000.jpg",
+      "kind": "ux_friction",
+      "sentiment": "uncertain",
+      "summary": "First-time user lands on an empty dashboard with no guidance on what to do or where to start.",
+      "likely_ui_element": "Dashboard main content area",
+      "likely_screen": "Dashboard (empty state)",
+      "interpretation_basis": "Narrator explicitly says 'I'm not really sure what I'm supposed to do here' while screen shows a mostly empty page with only navigation visible.",
+      "confidence": 0.85,
+      "implementation_hint": "Empty state needs a clear call-to-action and brief copy explaining what the user can create here."
+    },
+    {
+      "id": "o0001",
+      "moment_id": "m0001",
+      "quote": "Let me try clicking this Create button up in the corner. Okay, modal opened. The fields here are... wait, what does 'segment scope' mean? There's no help text and the dropdown only has two options.",
+      "t_start": 12.8,
+      "t_end": 28.1,
+      "frame_ref": "intermediates/frames/frame-0002.jpg",
+      "kind": "ux_friction",
+      "sentiment": "confused",
+      "summary": "The 'segment scope' field in the Create modal lacks explanation. The narrator is unsure what the two dropdown options mean.",
+      "likely_ui_element": "'Segment scope' dropdown in Create modal",
+      "likely_screen": "Create Segment modal",
+      "interpretation_basis": "Direct quote 'what does segment scope mean?' paired with visible dropdown that has no surrounding help text.",
+      "confidence": 0.9,
+      "implementation_hint": "Add inline tooltip or help text for 'segment scope' explaining the difference between the two options."
+    },
+    {
+      "id": "o0002",
+      "moment_id": "m0002",
+      "quote": "I'll just pick 'global' and see what happens. Now I'm filling in the name and... hmm, I hit save and nothing happened. No loading spinner, no confirmation. Did it work?",
+      "t_start": 29.5,
+      "t_end": 41.2,
+      "frame_ref": "intermediates/frames/frame-0004.jpg",
+      "kind": "bug",
+      "sentiment": "uncertain",
+      "summary": "After clicking Save in the Create modal, there is no visible feedback (no spinner, no toast, no state change), so the user can't tell if the action succeeded.",
+      "likely_ui_element": "Save button in Create modal",
+      "likely_screen": "Create Segment modal",
+      "interpretation_basis": "Narrator clicked Save and explicitly stated 'no loading spinner, no confirmation' while the modal remained visually unchanged.",
+      "confidence": 0.8,
+      "implementation_hint": "Add a loading state to the Save button (disabled + spinner) and a toast on success."
+    },
+    {
+      "id": "o0003",
+      "moment_id": "m0003",
+      "quote": "Oh okay, the modal closed eventually. So I guess it did save. But I had no idea anything was happening for like 3 seconds. That's not great.",
+      "t_start": 41.5,
+      "t_end": 49.8,
+      "frame_ref": "intermediates/frames/frame-0005.jpg",
+      "kind": "ux_friction",
+      "sentiment": "frustrated",
+      "summary": "Save action took roughly 3 seconds with no in-flight feedback. The narrator describes this as 'not great'.",
+      "likely_ui_element": "Save button",
+      "likely_screen": "Create Segment modal (post-save)",
+      "interpretation_basis": "Narrator's verbal description of the delay matches the visual evidence of the modal disappearing without intermediate feedback.",
+      "confidence": 0.85,
+      "implementation_hint": "Same fix as o0002: loading state during the async save."
+    }
+  ]
+}

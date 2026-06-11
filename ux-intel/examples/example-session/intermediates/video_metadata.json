@@ -1,0 +1,10 @@
+{
+  "duration_s": 187.4,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30.0,
+  "has_audio": true,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+  "codec_video": "h264",
+  "codec_audio": "aac"
+}

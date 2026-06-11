@@ -1,0 +1,20 @@
+{
+  "issues": [
+    {
+      "id": "issue-0001",
+      "title": "Save action in Create Segment modal needs loading state and success feedback",
+      "body_markdown": "## What we observed\n\nWhen the user clicks Save in the Create Segment modal, the button doesn't change state and there is no spinner, toast, or other indicator that anything is happening. The request takes around three seconds. The modal eventually closes but the user reported being unsure whether the action succeeded.\n\n## Evidence\n\n- `m0002` — narrator hits Save and says \"no loading spinner, no confirmation. Did it work?\"\n- `m0003` — narrator says the modal closed \"eventually\" after about three seconds of no feedback.\n\n## Suggested direction\n\n- Disable the Save button on click and show an inline spinner.\n- On success, show a toast confirming the segment was created and route to the newly created segment.\n- On error, surface the failure in the modal rather than letting it close silently.\n\n## Open questions\n\n- Is the three-second delay expected, or is the request slow? If slow, the perf work matters as much as the loading state.",
+      "labels": ["ux", "feedback", "modal", "loading-state"],
+      "cluster_id": "cluster-0001",
+      "evidence_observation_ids": ["o0002", "o0003"]
+    },
+    {
+      "id": "issue-0002",
+      "title": "Empty dashboard needs first-run guidance and a primary CTA",
+      "body_markdown": "## What we observed\n\nA first-time user lands on the dashboard, sees an empty page with no copy or call-to-action, and doesn't know what to do.\n\n## Evidence\n\n- `m0000` — narrator says \"I'm not really sure what I'm supposed to do here.\"\n\n## Suggested direction\n\n- Add an empty-state component that explains what the dashboard is for and surfaces the primary action (likely the same Create button currently in the corner).\n- Consider a brief contextual onboarding pointing to the Create flow.\n\n## Open questions\n\n- Is there a product decision pending about whether to seed the dashboard with sample data for new accounts?",
+      "labels": ["ux", "empty-state", "onboarding"],
+      "cluster_id": "cluster-0002",
+      "evidence_observation_ids": ["o0000"]
+    }
+  ]
+}
