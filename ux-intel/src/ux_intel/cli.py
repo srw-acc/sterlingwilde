@@ -139,10 +139,15 @@ def frames(
 
 @cli.command()
 @click.argument("session_dir", type=click.Path(exists=True, file_okay=False, path_type=Path))
-def align(session_dir: Path) -> None:
+@click.option("--no-preview", is_flag=True, help="Skip auto-generating the preview review.html.")
+def align(session_dir: Path, no_preview: bool) -> None:
     session = Session.load(session_dir)
     moment_set = align_stage.run(session)
     click.echo(f"align done: {len(moment_set.moments)} moments")
+    if not no_preview:
+        path = review_mod.generate(session)
+        click.echo(f"preview ready: {path}")
+        click.echo("  open in a browser to see transcript + screenshots (no AI yet)")
 
 
 @cli.command()
@@ -228,7 +233,12 @@ def pack(session_dir: Path, stage: str) -> None:
 @cli.command()
 @click.argument("session_dir", type=click.Path(exists=True, file_okay=False, path_type=Path))
 def review(session_dir: Path) -> None:
-    """Generate (or regenerate) the self-contained review.html for SESSION_DIR."""
+    """Generate (or regenerate) the self-contained review.html for SESSION_DIR.
+
+    Works at any stage of the pipeline:
+      - after `align`: shows transcript + screenshots ("preview" mode, no AI required)
+      - after `synthesize`: adds observation cards, clusters, issues, edit controls
+    """
     session = Session.load(session_dir)
     path = review_mod.generate(session)
     click.echo(f"review html: {path}")

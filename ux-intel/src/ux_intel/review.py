@@ -34,10 +34,20 @@ from .session import Session
 
 
 def generate(session: Session) -> Path:
-    """Build review.html from the current session artifacts. Returns its path."""
+    """Build review.html from the current session artifacts. Returns its path.
+
+    Works at any stage of the pipeline:
+      - after `align`: shows the transcript + screenshot timeline ("preview" mode)
+      - after `synthesize`: adds observation cards, clusters, issues, and edit controls
+    """
     state = session.state()
     moments = MomentSet.model_validate_json(session.moments_path.read_text()).moments
-    observations = ObservationSet.model_validate_json(session.observations_path.read_text()).observations
+
+    observations = []
+    if session.observations_path.exists():
+        observations = ObservationSet.model_validate_json(
+            session.observations_path.read_text()
+        ).observations
 
     clusters: list[Cluster] = []
     issues: list[IssueDraft] = []
@@ -63,6 +73,7 @@ def generate(session: Session) -> Path:
         "frames_b64": frames_b64,
         "kinds": [k.value for k in FeedbackKind],
         "sentiments": [s.value for s in Sentiment],
+        "preview": len(observations) == 0,
     }
 
     html = _PAGE_TEMPLATE.format(
@@ -371,14 +382,25 @@ function refreshFooter() {
 function renderHeader() {
   const sess = data.session;
   document.getElementById("session-id").textContent = sess.id;
-  const meta = [
+  const parts = [
     sess.source_video,
     sess.resolution,
     fmtDuration(sess.duration_s),
     `${sess.n_moments} moments`,
-    `${sess.n_observations} observations`,
-  ].filter(Boolean).join(" · ");
-  document.getElementById("session-meta").textContent = meta;
+  ];
+  if (data.preview) {
+    parts.push("preview (no AI yet)");
+  } else {
+    parts.push(`${sess.n_observations} observations`);
+  }
+  document.getElementById("session-meta").textContent = parts.filter(Boolean).join(" · ");
+
+  if (data.preview) {
+    document.getElementById("clusters-section").style.display = "none";
+    document.getElementById("issues-section").style.display = "none";
+    document.getElementById("preview-banner").style.display = "block";
+    document.getElementById("download-overrides").style.display = "none";
+  }
 }
 
 function renderTimeline() {
@@ -439,10 +461,12 @@ function renderMomentCard(moment, obs) {
   right.appendChild(transcript);
 
   if (!obs) {
-    const empty = document.createElement("div");
-    empty.className = "basis";
-    empty.textContent = "(no observation produced for this moment)";
-    right.appendChild(empty);
+    if (!data.preview) {
+      const empty = document.createElement("div");
+      empty.className = "basis";
+      empty.textContent = "(no observation produced for this moment)";
+      right.appendChild(empty);
+    }
     card.appendChild(right);
     return card;
   }
@@ -727,15 +751,21 @@ _PAGE_TEMPLATE = """\
   <div class="timeline" id="timeline"></div>
 </header>
 <main>
+  <div id="preview-banner" style="display:none;background:#fff5e8;border:1px solid #f0d090;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:13px;color:#7a4500;">
+    <strong>Preview mode.</strong> No AI analysis has run yet. This view shows the raw
+    transcript and screenshots captured from the recording. Run
+    <code>ux-intel pack &lt;session&gt; --stage analyze</code> (no-API) or
+    <code>ux-intel analyze &lt;session&gt;</code> (API) to add observations, clusters, and issue drafts.
+  </div>
   <section id="moments">
     <h2>Moments</h2>
     <div id="moments-list"></div>
   </section>
-  <section id="clusters">
+  <section id="clusters-section">
     <h2>Clusters</h2>
     <div id="clusters-list"></div>
   </section>
-  <section id="issues">
+  <section id="issues-section">
     <h2>Draft Issues</h2>
     <div id="issues-list"></div>
   </section>

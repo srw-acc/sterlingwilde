@@ -48,7 +48,25 @@ Model cache: faster-whisper honors `HF_HOME` / `HF_HUB_CACHE` env vars. To
 keep weights off your system disk, point those at an external drive, or pass
 `--whisper-cache /Volumes/External/ml-cache`.
 
-## Running without the Anthropic API
+## Running without any AI
+
+The first four stages — ingest, transcribe, frames, align — produce everything
+you need to *see* the recording (transcript, screenshots, time alignment) with
+zero API calls and no Anthropic / OpenAI keys. After `align`, the pipeline
+auto-generates `outputs/review.html` in preview mode: a browsable page with
+the timeline, every moment's transcript, and the matching screenshot.
+
+```bash
+ux-intel ingest      sessions/<id>
+ux-intel transcribe  sessions/<id> --local              # uses faster-whisper
+ux-intel frames      sessions/<id>
+ux-intel align       sessions/<id>                      # writes a preview review.html
+open                 sessions/<id>/outputs/review.html
+```
+
+Decide from there whether to invest in AI analysis.
+
+## Adding AI analysis without spending on the Anthropic API
 
 The analyze and synthesize stages normally hit Claude's API. You can opt out
 and drive those stages through a chat or local CLI session instead. The
@@ -57,28 +75,22 @@ interface (Claude Code, Claude.ai chat, `claude` CLI). The receiving Claude
 writes the next-stage JSON, and the pipeline picks up from there.
 
 ```bash
-# 1. Run the local stages
-ux-intel ingest sessions/<id>
-ux-intel transcribe sessions/<id> --local
-ux-intel frames sessions/<id>
-ux-intel align sessions/<id>
-
-# 2. Pack the analyze stage
+# 1. Pack the analyze stage
 ux-intel pack sessions/<id> --stage analyze
 # -> outputs/packs/analyze/{README.md, rubric.md, moments.md, frames/}
 
-# 3. Hand the pack to a Claude session, e.g. from the pack directory:
+# 2. Hand the pack to a Claude session, e.g. from the pack directory:
 #    `claude "Read README.md and do the task."`
 #    or upload the files to Claude.ai chat.
 #    Claude writes intermediates/observations.json.
 
-# 4. Pack the synthesize stage
+# 3. Pack the synthesize stage
 ux-intel pack sessions/<id> --stage synthesize
 # -> outputs/packs/synthesize/{README.md, rubric.md, observations.json}
 
-# 5. Same — hand to Claude, which writes outputs/synthesis.json.
+# 4. Same — hand to Claude, which writes outputs/synthesis.json.
 
-# 6. Finalize without calling the API:
+# 5. Finalize without calling the API:
 ux-intel synthesize sessions/<id> --from-pack
 ux-intel review    sessions/<id>
 ```
